@@ -197,10 +197,13 @@ void StudentTextEditor::insert(char ch)
 
     if(ch=='\t')
     {
-        add="    ";
+        for(int i=0;i<4;i++)
+        {
+        add=" ";
         (*it).insert(m_col, add);
-        getUndo()->submit(Undo::Action::INSERT, m_row, m_col,ch);
-        m_col+=4;
+        getUndo()->submit(Undo::Action::INSERT, m_row, m_col, ' ');
+            m_col++;
+        }
     }
     else
     {
@@ -209,7 +212,6 @@ void StudentTextEditor::insert(char ch)
         getUndo()->submit(Undo::Action::INSERT, m_row, m_col,ch);
         m_col++;
     }
-    
 }
 
 void StudentTextEditor::enter()
@@ -260,7 +262,7 @@ int StudentTextEditor::getLines(int startRow, int numRows, std::vector<std::stri
         temp--;
         temp_it--;
     }
-    while(temp<line.size() && temp<numRows)
+    while(temp<line.size() && temp<numRows+startRow)
     {
         lines.push_back(*temp_it);
         temp++;
