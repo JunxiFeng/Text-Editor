@@ -7,9 +7,9 @@ Undo* createUndo()
 
 void StudentUndo::submit(const Action action, int row, int col, char ch)
 {
+    /*
      if(action==DELETE) //Batching: Delete/Join
      {
-         
         if(!m_stack.empty())
         {//Delete Key case:fn+delete
         if(m_stack.top().m_action==DELETE && m_stack.top().m_row==row && m_stack.top().m_col==col)
@@ -18,7 +18,7 @@ void StudentUndo::submit(const Action action, int row, int col, char ch)
             return;
         }
          }
-     }
+     }*/
     std::string a;
     a+=ch;
     op=new operation(action, row, col, a);
@@ -69,6 +69,13 @@ StudentUndo::Action StudentUndo::get(int& row, int& col, int& count, std::string
             if(temp_col+1== m_stack.top().m_col)
             {
                 temp_s+=m_stack.top().ch;
+                temp_row=m_stack.top().m_row;
+                temp_col=m_stack.top().m_col;
+                continue;
+            }
+            if(temp_col==m_stack.top().m_col)
+            {
+                temp_s=m_stack.top().ch+temp_s;
                 temp_row=m_stack.top().m_row;
                 temp_col=m_stack.top().m_col;
                 continue;
