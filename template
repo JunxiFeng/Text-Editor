@@ -1,0 +1,76 @@
+Node *curr=m_trie->helper();//Point to the root of the trie
+    word=word+".";
+    bool check=true;
+    for(int i=0;i<word.size();i++)
+    {
+        char a=word[i];
+        int index=word[i]-97;
+        if(index<0) //Upper case
+            index=a-65;
+        if(word[i]=='\'')
+            index=26;
+        if(word[i]=='.')
+            index=27;
+        if(curr->children[index]==nullptr)
+        {
+            std:: vector<std::string>:: iterator it=suggestions.begin();
+            while(it!=suggestions.end())
+            {
+                it=suggestions.erase(it);
+            }
+            check=false;
+        }
+        else
+            curr=curr->children[index];
+    }
+     if(check == false){
+            //clear the old suggestions
+        std::vector<std::string>:: iterator it = suggestions.begin();
+        while(it != suggestions.end()){
+            it = suggestions.erase(it);
+        }
+        
+        std::string temp = word;
+        for(int i =0; i< temp.size(); i++){
+            for(int j =0; j<27; j++){
+                temp[i] = 'a'+j;
+                Node *cr = m_trie->helper();
+                bool c_c = true;
+                
+                for(int k =0; k < temp.size(); k++){
+                    char b = temp.at(k);
+                    //check for Uppercase or lower case
+                    int b1 = b-97;
+                    if(b1 <0){
+                        b1 = b-65;
+                    }
+                    if(b == '\'')
+                        b1 = 26;
+                    if(b == '.')
+                        b1 = 27;
+                    //if not found
+                    if(cr->children[b1] == nullptr){
+                        c_c = false;
+                        break;
+                    }
+                    else{
+                        cr = cr->children[b1];
+                    }
+                }
+                
+                if(c_c){
+                    if(suggestions.size() < max_suggestions){
+                    temp = temp.substr(0,temp.size()-1);
+                    suggestions.push_back(temp);
+                    temp = word;
+                    }
+                }
+            
+            }
+        }
+        }
+        
+        
+        return check;
+        
+}
