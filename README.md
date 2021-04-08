@@ -1,0 +1,3 @@
+# cs-32-Project4
+## This is a text editor that's not perfect 
+## Please don't copy or anything...
